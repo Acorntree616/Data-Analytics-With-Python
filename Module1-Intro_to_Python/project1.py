@@ -2,6 +2,11 @@
 This file perform. 
 
 Author: Alex Cornwall
+Reviewed: Ian Cornwall
+
+Default Command-line Usage:
+
+   python .\project1.py .\data\covtype.data.gz
    
 """
 #imports argv module from sys
@@ -30,31 +35,28 @@ COLUMNS = {
 }
 
 def pull_data(area_dict, cols):
-    """This takes a list of float values from a previous action in the code (cols).
-    It then appends that list into a dictionary specified by the function argument (area_dict).
+    """Takes a list of float values and appends that list into a dictionary.
 
-    :param area_dict: requires a preconstructed dictionary (Data, Rawah, Neota, Comanche, Cache)
-    :type area_dict: a dictionary within the file
-    
-    :param cols: calls a prefilled variable from the code.
-    :type cols: list
-    ...
-    :return: each column in the list appended to its own column with is a dictionary.
-    :rtype: appended dictionary
+    Args:
+        area_dict (float dict): dictionary to write to. 
+        cols (str list): single line of delimited data read from the file.
+
+    Returns:
+        appended dict: converts list values to float and appends them to area_dict 
     """
     for c in area_dict.keys():
         area_dict[c].append(float(cols[c]))
             
 def call_report(stats_repos, area_dict, Name):
-    """[Summary]
+    """Write data, collected in dictionaries, into an external .txt file
 
-    :param [ParamName]: [ParamDescription], defaults to [DefaultParamVal]
-    :type [ParamName]: [ParamType](, optional)
-    ...
-    :raises [ErrorType]: [ErrorDescription]
-    ...
-    :return: [ReturnDescription]
-    :rtype: [ReturnType]
+    Args:
+        stats_repos (float dict): open file variable to write to. 
+        area_dict (str list): single line of delimited data read from the file.
+        Name (str): pulls the name of the collecting region from the AREAS dict.
+
+    Returns:
+        write to file: dict is printed to file 
     """
     #writing in my wilderness area name titles so there is a clear dilineation between the data sets
     stats_repos.write('--------------------------------------\n')
@@ -67,20 +69,13 @@ def call_report(stats_repos, area_dict, Name):
         stats_repos.write("Minimum {}: {}\n".format(COLUMNS[c], min(area_dict[c])))
         stats_repos.write("Maximum {}: {}\n".format(COLUMNS[c], max(area_dict[c])))
         stats_repos.write("Mean {}: {}\n".format(COLUMNS[c], round((sum(area_dict[c])/len(area_dict[c])))))
-        stats_repos.write("\n")    
+        stats_repos.write("\n")
     
 def main():
     
-    """This function ensures that the code is run when executed on a command line.
-
-    :param [ParamName]: [ParamDescription], defaults to [DefaultParamVal]
-    :type [ParamName]: [ParamType](, optional)
-    ...
-    :raises [ErrorType]: [ErrorDescription]
-    ...
-    :return: [ReturnDescription]
-    :rtype: [ReturnType]
-  
+    """This function ensures that the code is run when executed on a command line
+    This is a special function that contains the core of the code
+    
     """
     #establishing dictionaries to be used in the program: it'd be good to come back to this file and see if I can code this in.
     Data = {
